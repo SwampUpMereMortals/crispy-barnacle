@@ -13,4 +13,4 @@ EXPOSE 8080
 COPY build/libs/$war /app/app.war
 COPY build/jetty-runner/jetty-runner-*.jar /app/jetty-runner.jar
 
-ENTRYPOINT [ "java -jar /app/jetty-runner.jar /app/app.war" ]
+ENTRYPOINT [ "/usr/bin/java", "-jar", "/app/jetty-runner.jar", "/app/app.war" ]
