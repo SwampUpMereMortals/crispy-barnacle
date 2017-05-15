@@ -2,6 +2,7 @@ FROM openjdk:8
 
 ARG version
 ARG jar
+ARG war
 
 
 LABEL description="SwampUP 2017 Mere Mortals Docker service example."
