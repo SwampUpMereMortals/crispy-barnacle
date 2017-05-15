@@ -1,0 +1,22 @@
+language: java
+sudo: required
+services:
+  - docker
+
+branches:
+  - master
+
+before_install:
+  - echo TODO Setup Artifactory credentials
+  - sudo apt-get update -qq
+
+install:
+  - echo TODO install debian package of CI Scripts.
+
+script:
+  - ./gradlew build
+  - |-
+    docker build \
+    --build-arg version="$(./gradlew -q printVersion)" \
+    --build-arg war="$(./gradlew -q printWarName)" \
+    -t crispy-barnacle:latest .
