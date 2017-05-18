@@ -14,10 +14,9 @@ install:
   - echo TODO install debian package of CI Scripts.
 
 script:
-  - ./gradlew build
+  - ./gradlew build -Partifactory_url=https://meremortal.jfrog.io/meremortal/ -Partifactory_user=${ARTIFACTORY_USER} -Partifactory_password=${ARTIFACTORY_PASS}
   - |-
     docker build \
     --build-arg version="$(./gradlew -q printVersion)" \
     --build-arg war="$(./gradlew -q printWarName)" \
     -t crispy-barnacle:latest .
-
