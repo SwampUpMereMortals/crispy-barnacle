@@ -14,7 +14,8 @@ install:
   - echo TODO install debian package of CI Scripts.
 
 script:
-  - ./gradlew build -Partifactory_url=https://meremortal.jfrog.io/meremortal/ -Partifactory_user=${ARTIFACTORY_USER} -Partifactory_password=${ARTIFACTORY_PASS}
+  - ./gradlew build
+  - if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then ./gradlew  artifactoryPublish -Partifactory_url=https://meremortal.jfrog.io/meremortal/ -Partifactory_user=${ARTIFACTORY_USER} -Partifactory_password=${ARTIFACTORY_PASS}; fi
   - |-
     docker build \
     --build-arg version="$(./gradlew -q printVersion)" \
