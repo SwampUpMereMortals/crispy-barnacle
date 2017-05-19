@@ -67,7 +67,10 @@ build.dependsOn downloadJettyRunner
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            // publish the jar
             from components.java
+            // publish the war.
+            from components.web
         }
     }
 }
