@@ -25,8 +25,8 @@ script:
       ./gradlew  artifactoryPublish 
       -Partifactory_url=https://meremortal.jfrog.io/meremortal/
       -Partifactory_user=${ARTIFACTORY_USER}
-      -Partifactory_password=${ARTIFACTORY_PASS};
-      docker login -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_PASS} meremortal-mortal-docker.jfrog.io
-      docker tag crispy-barnacle meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest
-      docker push meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest
+      -Partifactory_password=${ARTIFACTORY_PASS} ;
+      docker login -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_PASS} meremortal-mortal-docker.jfrog.io ;
+      docker tag crispy-barnacle meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest ;
+      docker push meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest ;
     fi
