@@ -14,19 +14,21 @@ install:
   - echo TODO install debian package of CI Scripts.
 
 script:
+  - set -ev
+  - VERSION=$(./gradlew -q printVersion)
   - ./gradlew build
   - |-
     docker build \
-    --build-arg version="$(./gradlew -q printVersion)" \
+    --build-arg version="${VERSION}" \
     --build-arg war="$(./gradlew -q printWarName)" \
     -t crispy-barnacle:latest .
   - |-
     if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
       ./gradlew  artifactoryPublish 
-      -Partifactory_url=https://meremortal.jfrog.io/meremortal/
+      -Partifactory_url=${ARTIFACTORY_URL}
       -Partifactory_user=${ARTIFACTORY_USER}
-      -Partifactory_password=${ARTIFACTORY_PASS} ;
-      docker login -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_PASS} meremortal-mortal-docker.jfrog.io ;
-      docker tag crispy-barnacle meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest ;
-      docker push meremortal-mortal-docker.jfrog.io/crispy-barnacle:latest ;
+      -Partifactory_password=${ARTIFACTORY_PASS} &&
+      docker login -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_PASS} ${DOCKER_REGISTRY} &&
+      docker tag crispy-barnacle ${DOCKER_REGISTRY}/crispy-barnacle:latest &&
+      docker push ${DOCKER_REGISTRY}/crispy-barnacle:latest ;
     fi
