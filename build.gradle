@@ -67,9 +67,11 @@ build.dependsOn downloadJettyRunner
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // publish the jar
-            from components.java
-            // publish the war.
+            // there is a choice to make here.
+            // you can publish the jar
+            //from components.java
+            // or you can publish the war.
+            // I pick war.
             from components.web
         }
     }
