@@ -15,10 +15,11 @@ install:
 
 script:
   - set -ev
+  - VERSION=$(./gradlew -q printVersion)
   - ./gradlew build
   - |-
     docker build \
-    --build-arg version="$(./gradlew -q printVersion)" \
+    --build-arg version="${VERSION}" \
     --build-arg war="$(./gradlew -q printWarName)" \
     -t crispy-barnacle:latest .
   - |-
