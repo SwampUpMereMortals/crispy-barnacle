@@ -24,10 +24,7 @@ script:
     -t crispy-barnacle:latest .
   - |-
     if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
-      ./gradlew  artifactoryPublish 
-      -Partifactory_url=${ARTIFACTORY_URL}
-      -Partifactory_user=${ARTIFACTORY_USER}
-      -Partifactory_password=${ARTIFACTORY_PASS} &&
+      ./gradlew  artifactoryPublish -Partifactory_user=${ARTIFACTORY_USER} -Partifactory_password=${ARTIFACTORY_PASS} &&
       docker login -u ${ARTIFACTORY_USER} -p ${ARTIFACTORY_PASS} ${DOCKER_REGISTRY} &&
       docker tag crispy-barnacle ${DOCKER_REGISTRY}/crispy-barnacle:latest &&
       docker push ${DOCKER_REGISTRY}/crispy-barnacle:latest ;
