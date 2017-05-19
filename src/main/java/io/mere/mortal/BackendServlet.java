@@ -13,10 +13,10 @@ public class BackendServlet extends HttpServlet
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException
   {
-  	  if ("oops".equals(request.getRequestURI())) {
+  	  if ("/oops".equals(request.getRequestURI())) {
   	  	response.sendError(500);
   	  } else {
-      	response.getOutputStream().print("This sometimes serves stuff");
+      	response.getOutputStream().print("This sometimes serves stuff: "+request.getRequestURI());
       }
   }
 }
