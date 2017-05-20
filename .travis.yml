@@ -7,26 +7,25 @@ branches:
   - master
 
 before_install:
-  - sudo su -c "echo -e \"deb https://${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD}@meremortal.jfrog.io/meremortal/mortal-debian precise main\n\" >> /etc/apt/sources.list"
+  - sudo su -c "echo -e \"deb https://${ARTIFACTORY_USER}:${ARTIFACTORY_PASS}@meremortal.jfrog.io/meremortal/mortal-debian precise main\n\" >> /etc/apt/sources.list"
   - sudo apt-get update -qq
-  - docker login -u "${ARTIFACTORY_USER}" -p "${ARTIFACTORY_PASSWORD}" https://meremortal-mortal-docker.jfrog.io
+  - docker login -u "${ARTIFACTORY_USER}" -p "${ARTIFACTORY_PASS}" https://meremortal-mortal-docker.jfrog.io
 
 install:
-  - echo TODO install debian package of CI Scripts.
-  - sudo apt-get install mere-mortal-ci
+  - sudo apt-get install ci-scripts --force-yes
 
 script:
   - set -ev
   - ./gradlew build
   - export SERVICE_NAME=crispy-barnacle
-  - export SERVICE_VERSION="$(./gradlew -q printVersion)
-  - export JAR_NAME="$(./gradlew -q printWarName)
+  - export SERVICE_VERSION="$(./gradlew -q printVersion)"
+  - export JAR_NAME="$(./gradlew -q printWarName)"
   - echo Built ${JAR_NAME} at version ${SERVICE_VERSION}
   - docker build --build-arg version=${SERVICE_VERSION} --build-arg jar=${JAR_NAME} -t ${SERVICE_NAME}:latest .
+  - docker images
   - |-
     if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       set -ev;
-      /opt/mere-mortals/swampup/increment-pom-version.sh && 
+      /opt/mere-mortals/swampup/increment-pom-version.sh;
       /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME};
     fi
-  - docker images
