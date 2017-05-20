@@ -7,6 +7,8 @@ branches:
   - master
 
 before_install:
+  - git config --global user.email "mere.mortal.ci@gmail.com"
+  - git config --global user.name "Mere Mortal CI"
   - sudo su -c "echo -e \"deb https://${ARTIFACTORY_USER}:${ARTIFACTORY_PASS}@meremortal.jfrog.io/meremortal/mortal-debian precise main\n\" >> /etc/apt/sources.list"
   - sudo apt-get update -qq
   - docker login -u "${ARTIFACTORY_USER}" -p "${ARTIFACTORY_PASS}" https://meremortal-mortal-docker.jfrog.io
@@ -26,6 +28,6 @@ script:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       set -ev;
       echo Conducting a version bump and publish to Artifactory.
-      /opt/mere-mortals/swampup/increment-pom-version.sh;
-      /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME};
+      /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME} latest;
+      /opt/mere-mortals/swampup/increment-gradle-version.sh;
     fi
