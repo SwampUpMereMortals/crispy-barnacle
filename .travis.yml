@@ -23,9 +23,9 @@ script:
   - echo Built ${JAR_NAME} at version ${SERVICE_VERSION}
   - docker build --build-arg version=${SERVICE_VERSION} --build-arg jar=${JAR_NAME} -t ${SERVICE_NAME}:latest .
   - docker images
-  - |-
-    if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       set -ev;
+      echo Conducting a version bump and publish to Artifactory.
       /opt/mere-mortals/swampup/increment-pom-version.sh;
       /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME};
     fi
