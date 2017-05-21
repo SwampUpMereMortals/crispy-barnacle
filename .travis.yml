@@ -7,6 +7,7 @@ branches:
   - master
 
 before_install:
+  - git config remote.origin.url https://${GH_TOKEN}@github.com/SwampUpMereMortals/crispy-barnacle.git
   - git config --global user.email "mere.mortal.ci@gmail.com"
   - git config --global user.name "Mere Mortal CI"
   - sudo su -c "echo -e \"deb https://${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD}@meremortal.jfrog.io/meremortal/mortal-debian precise main\n\" >> /etc/apt/sources.list"
