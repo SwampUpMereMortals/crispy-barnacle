@@ -18,7 +18,7 @@ install:
   - sudo apt-get install ci-scripts --force-yes
 
 script:
-  - set -ev
+  - set -e
   - ./gradlew build
   - export SERVICE_NAME=crispy-barnacle
   - export SERVICE_VERSION="$(./gradlew -q printVersion)"
@@ -27,7 +27,7 @@ script:
   - docker build --build-arg version=${SERVICE_VERSION} --build-arg jar=${JAR_NAME} -t meremortal-mortal-docker.jfrog.io/${SERVICE_NAME}:latest .
   - docker images
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-      set -ev;
+      set -e;
       echo "Conducting a version bump and publish to Artifactory." ;
       /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME} latest;
       /opt/mere-mortals/swampup/increment-gradle-version.sh;
