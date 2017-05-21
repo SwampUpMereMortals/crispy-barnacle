@@ -23,12 +23,11 @@ script:
   - export SERVICE_NAME=crispy-barnacle
   - export SERVICE_VERSION="$(./gradlew -q printVersion)"
   - export JAR_NAME="$(./gradlew -q printWarName)"
-  - echo Built ${JAR_NAME} at version ${SERVICE_VERSION}
-  - docker build --build-arg version=${SERVICE_VERSION} --build-arg jar=${JAR_NAME} -t meremortal-mortal-docker.jfrog.io/${SERVICE_NAME}:latest .
+  - docker build --build-arg version=${SERVICE_VERSION} --build-arg jar=${JAR_NAME} -t meremortal-mortal-docker.jfrog.io/${SERVICE_NAME}:${SERVICE_VERSION} .
   - docker images
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       set -e;
       echo "Conducting a version bump and publish to Artifactory." ;
-      /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME} latest;
+      /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME} ${SERVICE_VERSION};
       /opt/mere-mortals/swampup/increment-gradle-version.sh;
     fi
