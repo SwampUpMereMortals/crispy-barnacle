@@ -29,9 +29,9 @@ script:
       set -e;
       echo "Conducting a version bump and publish to Artifactory.";
       /opt/mere-mortals/swampup/publish-docker-image.sh ${SERVICE_NAME} ${SERVICE_VERSION};
-      git clone git@github.com:SwampUpMereMortals/crispy-barnacle-deployment.git;
-      echo "https://${GH_TOKEN}:@github.com" > .git/credentials;
+      git clone https://${GH_TOKEN}@github.com/SwampUpMereMortals/crispy-barnacle-deployment.git;
       cd crispy-barnacle-deployment;
+      echo "https://${GH_TOKEN}:@github.com" > .git/credentials;
       git checkout dev;
       /opt/mere-mortals/swampup/update_yaml.sh ./deployment.yaml ${SERVICE_NAME} ${SERVICE_VERSION};
       git commit -m "Update Deployment Image ${SERVICE_NAME}:${SERVICE_VERSION}" deployment.yaml;
