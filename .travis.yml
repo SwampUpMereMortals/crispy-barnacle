@@ -33,7 +33,7 @@ script:
       cd crispy-barnacle-deployment;
       echo "https://${GH_TOKEN}:@github.com" > .git/credentials;
       git checkout dev;
-      /opt/mere-mortals/swampup/update_yaml.sh ./deployment.yaml ${SERVICE_NAME} ${SERVICE_VERSION};
+      /opt/mere-mortals/swampup/update_yaml.sh ./deployment.yaml meremortal-mortal-docker.jfrog.io/${SERVICE_NAME} ${SERVICE_VERSION};
       git commit -m "Update Deployment Image ${SERVICE_NAME}:${SERVICE_VERSION}" deployment.yaml;
       git push origin ${git_branch};
       cd ..;
